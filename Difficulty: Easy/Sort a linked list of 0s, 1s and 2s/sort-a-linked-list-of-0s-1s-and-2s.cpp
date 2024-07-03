@@ -38,31 +38,65 @@ class Solution
             return head;
         }
         // Add code here
-        int cnt0=0,cnt2=0,cnt1=0;
+        // int cnt0=0,cnt2=0,cnt1=0;
+        // Node* temp=head;
+        // while(temp!=NULL){
+        //     if(temp->data==0) cnt0++;
+            
+        //     else if(temp->data==1)cnt1++;
+            
+        //     else if (temp->data==2) cnt2++;
+            
+        //     temp=temp->next;
+        // }
+        // temp=head;
+        // for(int i=0;i<cnt0;i++){
+        //         temp->data=0;
+        //         temp=temp->next;
+        //     }
+        // for(int i=0;i<cnt1;i++){
+        //         temp->data=1;
+        //         temp=temp->next;
+        //     }
+        // for(int i=0;i<cnt2;i++){
+        //         temp->data=2;
+        //         temp=temp->next;
+        // }
+        
+        //BY CHANGING LINKS
+        Node* zerohead=new Node(-1);
+        Node* onehead=new Node(-1);
+        Node* twohead=new Node(-1);
+        
+        Node* ll0=zerohead;
+        Node* ll1=onehead;
+        Node* ll2=twohead;
+        
+        
         Node* temp=head;
         while(temp!=NULL){
-            if(temp->data==0) cnt0++;
-            
-            else if(temp->data==1)cnt1++;
-            
-            else if (temp->data==2) cnt2++;
-            
+            if(temp->data==0){
+                ll0->next=temp;
+                ll0=temp;
+            }
+            else if(temp->data==1){
+                ll1->next=temp;
+                ll1=temp;
+            }
+            else{
+                ll2->next=temp;
+                ll2=temp;
+            }
             temp=temp->next;
         }
-        temp=head;
-        for(int i=0;i<cnt0;i++){
-                temp->data=0;
-                temp=temp->next;
-            }
-        for(int i=0;i<cnt1;i++){
-                temp->data=1;
-                temp=temp->next;
-            }
-        for(int i=0;i<cnt2;i++){
-                temp->data=2;
-                temp=temp->next;
-        }
-        return head;
+        ll0->next=(onehead->next)? (onehead->next):(twohead->next);
+        ll1->next=twohead->next;
+        ll2->next=NULL;
+        Node* newHead=zerohead->next;
+        delete(zerohead);
+        delete(onehead);
+        delete(twohead);
+        return newHead;
     }
 };
 
