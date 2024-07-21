@@ -74,22 +74,43 @@ struct Node {
 */
 
 //Function to find the length of a loop in the linked list.
+int findLength(Node* slowp,Node* fastp){
+    int cnt=1;
+    fastp=fastp->next;
+    while(slowp!=fastp){
+        cnt++;
+        fastp=fastp->next;
+    }
+    return cnt;
+}
 int countNodesinLoop(struct Node *head)
 {
     // Code here
-    Node* temp=head;
-    int cnt=1;
-    int value;
-    map<Node*,int> mp;
+    //stack method
+    // Node* temp=head;
+    // int cnt=1;
+    // int value;
+    // map<Node*,int> mp;
 
-    while(temp!=NULL){
-        if(mp.find(temp)!=mp.end()){
-            value=mp[temp];
-            return cnt-value;
-        }
-        mp[temp]=cnt;
-        cnt++;
-        temp=temp->next;
+    // while(temp!=NULL){
+    //     if(mp.find(temp)!=mp.end()){
+    //         value=mp[temp];
+    //         return cnt-value;
+    //     }
+    //     mp[temp]=cnt;
+    //     cnt++;
+    //     temp=temp->next;
+    // }
+    //tortoise and hare
+    //when the the slow and fast meet we start counting
+    Node* slowp=head;
+    Node* fastp=head;
+    while(fastp!=NULL && fastp->next!=NULL){
+            slowp=slowp->next;
+            fastp=fastp->next->next;
+            if(slowp==fastp){
+                return findLength(slowp,fastp);
+            }
     }
     return 0;
 }
